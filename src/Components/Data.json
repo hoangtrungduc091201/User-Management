@@ -1,0 +1,32 @@
+[
+    {
+        "id":1,
+        "name":"Duc",
+        "phone":"0848799618",
+        "permission":1
+    },
+    {
+        "id":2,
+        "name":"Minh",
+        "phone":"0123456788",
+        "permission":2
+    },
+    {
+        "id":3,
+        "name":"DLong",
+        "phone":"0988306876",
+        "permission":3
+    },
+    {
+        "id":4,
+        "name":"Phuc",
+        "phone":"0913314388",
+        "permission":2
+    },
+    {
+        "id":5,
+        "name":"Giang",
+        "phone":"0897311238",
+        "permission":2
+    }
+]
