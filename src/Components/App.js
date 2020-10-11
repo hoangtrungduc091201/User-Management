@@ -5,6 +5,7 @@ import Header from './Header';
 import Search from './Search';
 import TableData from './TableData';
 import DataUser from './Data.json'
+import { v4 as uuidv4 } from 'uuid';
 class App extends Component {
 
   constructor(props) {
@@ -12,8 +13,34 @@ class App extends Component {
     this.state ={
       displayForm:false,
       dataUser:DataUser,
-      searchText:''
+      searchText:'',
+      editUserStatus:false,
+      editUserObject:{}
     }
+  }
+  changeEditUserStatus= () =>{
+    this.setState({
+      editUserStatus:!this.state.editUserStatus
+    });
+  }
+  editUser = (user) => {
+    this.setState({
+      editUserObject:user
+    });
+    console.log(user);
+  }
+  getNewUserData = (name,phone,permission)=>{
+       var item ={};
+        item.id =uuidv4();
+        item.name =name;
+        item.phone =phone;
+        item.permission =permission;
+        var items= this.state.dataUser;
+        items.push(item);
+        this.setState({
+          dataUser:items
+        });
+        console.log(this.state.dataUser)
   }
   getTextSearch = (dl) => {
     this.setState({
@@ -25,6 +52,16 @@ class App extends Component {
       displayForm:!this.state.displayForm
     });
   }
+  getEditUserInfoForApp =(info) => {
+    // console.log(info)
+    this.state.dataUser.forEach((value , key) => {
+      if(value.id === info.id){
+        value.name = info.name;
+        value.phone = info.phone;
+        value.permission= info.permission;
+      }
+    } )
+  }
   render() {
     const res =[];
     this.state.dataUser.forEach((user) => {
@@ -32,7 +69,7 @@ class App extends Component {
         res.push(user)
       }
     })
-    console.log(res)
+    // console.log(res)
     return (
       <div>
         <Header/>
@@ -40,11 +77,23 @@ class App extends Component {
           <div className="container">
             <div className="row">
               <Search
-              checkConnectProps = {(dl) => this.getTextSearch(dl)}
-              changeState={() =>this.changeState()} displayForm={this.state.displayForm}/>
+                      getEditUserInfoForApp= {(info) => this.getEditUserInfoForApp(info)}
+                      checkConnectProps = {(dl) => this.getTextSearch(dl)}
+                      changeState={() =>this.changeState()}
+                      displayForm={this.state.displayForm}
+                      editUserStatus={this.state.editUserStatus}
+                      editUserObject={this.state.editUserObject}
+                      changeEditUserStatus={()=>this.changeEditUserStatus()}
+               />  
               <div className="col-12"><hr/></div>
-              <TableData dataUser={res}/>
-              <AddUser displayForm={this.state.displayForm}/>
+              <TableData
+                changeEditUserStatus={()=>this.changeEditUserStatus()}
+                editFun={(user) => this.editUser(user)}
+                dataUser={res}/>
+              <AddUser 
+                  addUser={(name,phone,permission) => this.getNewUserData(name,phone,permission)}
+                   displayForm={this.state.displayForm}>
+               </AddUser>
             </div>
           </div>
         </div>

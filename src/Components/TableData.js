@@ -4,7 +4,10 @@ class TableData extends Component {
 
     mappingDataUser =() => {
         return this.props.dataUser.map((value, key) => {
-            return <TableDataRow key={key} id={value.id}  name={value.name} phone={value.phone} permission = {value.permission} />
+            return <TableDataRow
+                    changeEditUserStatus={()=>this.props.changeEditUserStatus()}
+                    editFunClick ={(user)=>this.props.editFun(value)}
+                    key={key} sst={key}  name={value.name} phone={value.phone} permission = {value.permission} />
         })
     }
     render() {
@@ -17,7 +20,7 @@ class TableData extends Component {
                         <th>Full Name</th>
                         <th>Phone</th>
                         <th>Permission</th>
-                        <th>manipulation</th>
+                        <th>Manipulation</th>
                     </tr>
                     </thead>
                     <tbody>

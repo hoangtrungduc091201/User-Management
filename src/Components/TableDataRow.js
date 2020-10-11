@@ -8,15 +8,19 @@ class TableDataRow extends Component {
             return 'Moderator'
         } else return 'Normal'
     }
+    editClick = ()=>{
+        this.props.editFunClick();
+        this.props.changeEditUserStatus(); 
+    }
     render() {
         return (
                     <tr>
-                        <td >{this.props.id}</td>
+                        <td >{this.props.sst+1}</td>
                         <td>{this.props.name}</td>
                         <td>{this.props.phone}</td>
                         <td>{this.permissionShow()}</td>
                         <td>
-                        <div className="btn btn-warning edit"><i className="fa fa-edit">Edit</i></div>
+                        <div className="btn btn-warning edit" onClick={()=>this.editClick()}><i className="fa fa-edit">Edit</i></div>
                         <div className="btn btn-danger remove"><i className="fa fa-edit">Remove</i></div>
                         </td>
                     </tr>
